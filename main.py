@@ -1,5 +1,8 @@
 import pygame
 
+# Initializing the Pygame
+pygame.init()
+
 # Creating some Screen Variables
 HEIGHT = 600
 WIDTH = 600
@@ -28,4 +31,3 @@ while RUNNING:
 
     # Keeping a Constant Framerate
     CLOCK.tick(60)
-
