@@ -15,7 +15,7 @@ CLOCK = pygame.time.Clock()
 
 # Colors
 LIGHT_STEEL_BLUE = (20, 189, 172)
-STEEL_BLUE = (70, 130, 180)
+DARK_STEEL_BLUE = (13, 161, 146)
 
 # Creating the Main loop of the Game
 while RUNNING:
