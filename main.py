@@ -1,4 +1,5 @@
 import pygame
+import numpy as np
 
 # Initializing the Pygame
 pygame.init()
@@ -12,6 +13,11 @@ ICON = pygame.image.load("icon/icon.png").convert_alpha()
 pygame.display.set_caption("Tic Tac Toe")
 pygame.display.set_icon(ICON)
 CLOCK = pygame.time.Clock()
+
+# Creating the Variables for the Square
+SQUARE_ROW = 3
+SQUARE_COLUMN = 3
+SQUARE = np.zeros( (SQUARE_ROW, SQUARE_COLUMN) )
 
 # Colors
 LIGHT_STEEL_BLUE = (20, 189, 172)
@@ -41,6 +47,10 @@ class MAIN:
     def draw_elements(self):
         self.lines.draw_vertical_line()
         self.lines.draw_horizontal_line()
+
+    # Creating the Function to Mark the Square
+    def mark_square(self, row, column, player):
+        SQUARE[row][column] = player
 
 # Assigning the Classes
 main_game = MAIN()
