@@ -52,6 +52,11 @@ class MAIN:
     def mark_square(self, row, column, player):
         SQUARE[row][column] = player
 
+    # Creating the Function to Find the Available Square
+    def available_square(self, row, column):
+        return SQUARE[row][column] == 0
+
+
 # Assigning the Classes
 main_game = MAIN()
 
