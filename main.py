@@ -56,6 +56,15 @@ class MAIN:
     def available_square(self, row, column):
         return SQUARE[row][column] == 0
 
+    # Creating the Function to Check if the Board is full
+    def is_board_full(self):
+        for row in range(SQUARE_ROW):
+            for column in range(SQUARE_COLUMN):
+                if SQUARE[row][column] == 0:
+                    return False
+
+        return True
+
 
 # Assigning the Classes
 main_game = MAIN()
