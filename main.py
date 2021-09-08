@@ -1,5 +1,6 @@
 import pygame
 import numpy as np
+from pygame.constants import MOUSEBUTTONDOWN
 
 # Initializing the Pygame
 pygame.init()
@@ -75,6 +76,17 @@ while RUNNING:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             RUNNING = False
+
+        # Creating the Event to Check the Mouse Button Click
+        if event.type == MOUSEBUTTONDOWN:
+            # Adjusting the Clicking Window
+            mouse_x = event.pos[0]
+            mouse_y = event.pos[1]
+
+            # Creating the Variable for the Mouse Click Axis
+            clicked_x = int(mouse_x // 200)
+            clicked_y = int(mouse_y // 200)
+
 
     # Filling the Screen with some RGB colors
     SCREEN.fill(LIGHT_STEEL_BLUE)
