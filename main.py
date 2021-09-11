@@ -25,6 +25,8 @@ player = 1
 # Colors
 LIGHT_STEEL_BLUE = (20, 189, 172)
 DARK_STEEL_BLUE = (13, 161, 146)
+CIRCLE_COLOR = (242, 235, 211)
+CROSS_COLOR = (84, 84, 84)
 
 # Creating the Class for the Lines
 class LINES:
