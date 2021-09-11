@@ -19,6 +19,9 @@ SQUARE_ROW = 3
 SQUARE_COLUMN = 3
 SQUARE = np.zeros( (SQUARE_ROW, SQUARE_COLUMN) )
 
+# Creating the Variables for the Player
+player = 1
+
 # Colors
 LIGHT_STEEL_BLUE = (20, 189, 172)
 DARK_STEEL_BLUE = (13, 161, 146)
@@ -85,6 +88,15 @@ while RUNNING:
             # Creating the Variable for the Mouse Click Axis
             clicked_x = int(mouse_x // 200)
             clicked_y = int(mouse_y // 200)
+
+            # Creating the Condition to Fill the Console Board
+            if main_game.available_square(clicked_x, clicked_y):
+                if player == 1:
+                    main_game.mark_square(clicked_x, clicked_y, player)
+                    player = 2
+                elif player == 2:
+                    main_game.mark_square(clicked_x, clicked_y, player)
+                    player = 1
 
 
     # Filling the Screen with some RGB colors
