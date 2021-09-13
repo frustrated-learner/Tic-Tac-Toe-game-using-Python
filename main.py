@@ -76,6 +76,10 @@ class MAIN:
         self.lines.draw_vertical_line()
         self.lines.draw_horizontal_line()
         self.figures.draw_figures()
+        self.draw_winning_horizontal_line()
+        self.draw_winning_vertical_line()
+        self.draw_winning_forward_slash()
+        self.draw_winning_back_slash()
 
     # Creating the Function to Mark the Square
     def mark_square(self, row, column, player):
@@ -93,6 +97,45 @@ class MAIN:
                     return False
 
         return True
+
+    # Creating the Function to Draw the Winning Horizontal line
+    def draw_winning_horizontal_line(self):
+        for column in range(SQUARE_COLUMN):
+            if SQUARE[0][column] == 1 and SQUARE[1][column] == 1 and SQUARE[2][column] == 1:
+                pygame.draw.line(SCREEN, CIRCLE_COLOR, (column / 1 + 20, column * 200 + 100), (column / 1 + 580, column * 200 + 100), 14)
+                return True
+            elif SQUARE[0][column] == 2 and SQUARE[1][column] == 2 and SQUARE[2][column] == 2:
+                pygame.draw.line(SCREEN, CROSS_COLOR, (column / 1 + 20, column * 200 + 100), (column / 1 + 580, column * 200 + 100), 14)
+                return True 
+
+    # Creating the Function to Draw the Winning Vertical line
+    def draw_winning_vertical_line(self):
+        for row in range(SQUARE_ROW):
+            if SQUARE[row][0] == 1 and SQUARE[row][1] == 1 and SQUARE[row][2] == 1:
+                pygame.draw.line(SCREEN, CIRCLE_COLOR, (row * 200 + 100, row / 1 + 580), (row * 200 + 100, row / 1 + 20), 14)
+                return True
+            elif SQUARE[row][0] == 2 and SQUARE[row][1] == 2 and SQUARE[row][2] == 2:
+                pygame.draw.line(SCREEN, CROSS_COLOR, (row * 200 + 100, row / 1 + 580), (row * 200 + 100, row / 1 + 20), 14)
+                return True
+
+    # Creating the Function to Draw the Forward Slash
+    def draw_winning_forward_slash(self):
+        if SQUARE[0][0] == 1 and SQUARE[1][1] == 1 and SQUARE[2][2] == 1:
+            pygame.draw.line(SCREEN, CIRCLE_COLOR, (20, 20), (580, 580), 14)
+            return True
+        elif SQUARE[0][0] == 2 and SQUARE[1][1] == 2 and SQUARE[2][2] == 2:
+            pygame.draw.line(SCREEN, CROSS_COLOR, (20, 20), (580, 580), 14)
+            return True
+
+    # Creating the Function to Draw the Back Slash
+    def draw_winning_back_slash(self):
+        if SQUARE[0][2] == 1 and SQUARE[1][1] == 1 and SQUARE[2][0] == 1:
+            pygame.draw.line(SCREEN, CIRCLE_COLOR, (580, 20), (20, 580), 14)
+            return True
+        elif SQUARE[0][2] == 2 and SQUARE[1][1] == 2 and SQUARE[2][0] == 2:
+            pygame.draw.line(SCREEN, CROSS_COLOR, (580, 20), (20, 580), 14)
+            return True
+
 
 
 # Assigning the Classes
