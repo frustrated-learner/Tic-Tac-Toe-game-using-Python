@@ -19,6 +19,10 @@ SQUARE_ROW = 3
 SQUARE_COLUMN = 3
 SQUARE = np.zeros( (SQUARE_ROW, SQUARE_COLUMN) )
 
+# Creating the Variables for the Circle
+CIRCLE_RADIUS = 60
+CIRCLE_WIDTH = 14
+
 # Creating the Variables for the Player
 player = 1
 
@@ -43,15 +47,35 @@ class LINES:
         pygame.draw.line(SCREEN, DARK_STEEL_BLUE, (0, 200), (600, 200), 10)
         pygame.draw.line(SCREEN, DARK_STEEL_BLUE, (0, 400), (600, 400), 10)
 
+# Creating the Class for the Figures
+class FIGURES:
+    def __init__(self):
+        pass
+
+    # Creating the Function to Draw the Figures on the Screen
+    def draw_figures(self):
+        for row in range(SQUARE_ROW):
+            for column in range(SQUARE_COLUMN):
+                # Drawing the Circle
+                if SQUARE[row][column] == 1:
+                    pygame.draw.circle(SCREEN, CIRCLE_COLOR, (int(row * 200 + 200 / 2), int(column * 200 + 200 / 2)), CIRCLE_RADIUS, CIRCLE_WIDTH)
+                # Drawing the Cross
+                elif SQUARE[row][column] == 2:
+                    pygame.draw.line(SCREEN, CROSS_COLOR, (row * 200 + 200 - 40, column * 200 + 40), (row * 200 + 40, column * 200 + 200 - 40),  14)
+                    pygame.draw.line(SCREEN, CROSS_COLOR, (row * 200 + 40, column * 200 + 40), (row * 200 + 200 - 40, column * 200 + 200 - 40),  14)
+
+
 # Creating the Class for the Main logic of the Game
 class MAIN:
     def __init__(self):
         self.lines = LINES()
+        self.figures = FIGURES()
 
     # Creating the Function to Draw the Elements on the Screen
     def draw_elements(self):
         self.lines.draw_vertical_line()
         self.lines.draw_horizontal_line()
+        self.figures.draw_figures()
 
     # Creating the Function to Mark the Square
     def mark_square(self, row, column, player):
