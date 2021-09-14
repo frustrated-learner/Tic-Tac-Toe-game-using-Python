@@ -26,6 +26,9 @@ CIRCLE_WIDTH = 14
 # Creating the Variables for the Player
 player = 1
 
+# Creating some Game Variables
+GAME_OVER = False
+
 # Colors
 LIGHT_STEEL_BLUE = (20, 189, 172)
 DARK_STEEL_BLUE = (13, 161, 146)
@@ -76,11 +79,8 @@ class MAIN:
         self.lines.draw_vertical_line()
         self.lines.draw_horizontal_line()
         self.figures.draw_figures()
-        self.draw_winning_horizontal_line()
-        self.draw_winning_vertical_line()
-        self.draw_winning_forward_slash()
-        self.draw_winning_back_slash()
-
+        self.check_win()
+        
     # Creating the Function to Mark the Square
     def mark_square(self, row, column, player):
         SQUARE[row][column] = player
@@ -95,46 +95,58 @@ class MAIN:
             for column in range(SQUARE_COLUMN):
                 if SQUARE[row][column] == 0:
                     return False
-
+                
         return True
 
-    # Creating the Function to Draw the Winning Horizontal line
-    def draw_winning_horizontal_line(self):
+    # Creating the Function to Check if the Player has Won
+    def check_win(self):
+        global GAME_OVER
+        
+        # Creating the Condition to Draw the Horizontal Lines
         for column in range(SQUARE_COLUMN):
             if SQUARE[0][column] == 1 and SQUARE[1][column] == 1 and SQUARE[2][column] == 1:
                 pygame.draw.line(SCREEN, CIRCLE_COLOR, (column / 1 + 20, column * 200 + 100), (column / 1 + 580, column * 200 + 100), 14)
-                return True
+                GAME_OVER = True
             elif SQUARE[0][column] == 2 and SQUARE[1][column] == 2 and SQUARE[2][column] == 2:
                 pygame.draw.line(SCREEN, CROSS_COLOR, (column / 1 + 20, column * 200 + 100), (column / 1 + 580, column * 200 + 100), 14)
-                return True 
+                GAME_OVER = True 
 
-    # Creating the Function to Draw the Winning Vertical line
-    def draw_winning_vertical_line(self):
+        # Creating the Condition to Draw the Vertical Lines
         for row in range(SQUARE_ROW):
             if SQUARE[row][0] == 1 and SQUARE[row][1] == 1 and SQUARE[row][2] == 1:
                 pygame.draw.line(SCREEN, CIRCLE_COLOR, (row * 200 + 100, row / 1 + 580), (row * 200 + 100, row / 1 + 20), 14)
-                return True
+                GAME_OVER = True
             elif SQUARE[row][0] == 2 and SQUARE[row][1] == 2 and SQUARE[row][2] == 2:
                 pygame.draw.line(SCREEN, CROSS_COLOR, (row * 200 + 100, row / 1 + 580), (row * 200 + 100, row / 1 + 20), 14)
-                return True
+                GAME_OVER = True
 
-    # Creating the Function to Draw the Forward Slash
-    def draw_winning_forward_slash(self):
+        # Creating the Condition to Draw the Backslash Lines
         if SQUARE[0][0] == 1 and SQUARE[1][1] == 1 and SQUARE[2][2] == 1:
             pygame.draw.line(SCREEN, CIRCLE_COLOR, (20, 20), (580, 580), 14)
-            return True
+            GAME_OVER = True
         elif SQUARE[0][0] == 2 and SQUARE[1][1] == 2 and SQUARE[2][2] == 2:
             pygame.draw.line(SCREEN, CROSS_COLOR, (20, 20), (580, 580), 14)
-            return True
+            GAME_OVER = True
 
-    # Creating the Function to Draw the Back Slash
-    def draw_winning_back_slash(self):
+        # Creating the Condition to Draw the Forward Slash Lines
         if SQUARE[0][2] == 1 and SQUARE[1][1] == 1 and SQUARE[2][0] == 1:
             pygame.draw.line(SCREEN, CIRCLE_COLOR, (580, 20), (20, 580), 14)
-            return True
+            GAME_OVER = True
         elif SQUARE[0][2] == 2 and SQUARE[1][1] == 2 and SQUARE[2][0] == 2:
             pygame.draw.line(SCREEN, CROSS_COLOR, (580, 20), (20, 580), 14)
-            return True
+            GAME_OVER = True
+            
+    # Creating the Function to Restart the Game
+    def game_reset(self):
+        global SQUARE
+        global player
+        SCREEN.fill(LIGHT_STEEL_BLUE)
+        self.lines.draw_vertical_line()
+        self.lines.draw_horizontal_line()
+        player = 1
+        SQUARE_ROW = 3
+        SQUARE_COLUMN = 3
+        SQUARE = np.zeros( (SQUARE_ROW, SQUARE_COLUMN) )
 
 
 
@@ -149,7 +161,7 @@ while RUNNING:
             RUNNING = False
 
         # Creating the Event to Check the Mouse Button Click
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and not GAME_OVER:
             # Adjusting the Clicking Window
             mouse_x = event.pos[0]
             mouse_y = event.pos[1]
@@ -166,12 +178,17 @@ while RUNNING:
                 elif player == 2:
                     main_game.mark_square(clicked_x, clicked_y, player)
                     player = 1
-
+            
+        # Creating the Event to Restart the Game
+        if (event.type == pygame.KEYDOWN and GAME_OVER) or (event.type == pygame.KEYDOWN and main_game.is_board_full()):
+            if event.key == pygame.K_SPACE:
+                GAME_OVER = False
+                main_game.game_reset()
 
     # Filling the Screen with some RGB colors
     SCREEN.fill(LIGHT_STEEL_BLUE)
 
-    # Calling the Function to Draw the Elements on the Screen
+    # Calling the Functions to Draw the Elements on the Screen
     main_game.draw_elements()
 
     # Updating the Dispaly of the Screen
